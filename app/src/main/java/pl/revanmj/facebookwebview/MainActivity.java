@@ -1,5 +1,7 @@
 package pl.revanmj.facebookwebview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -34,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
         webview.addPermittedHostname("www.facebook.com");
         webview.addPermittedHostname("touch.facebook.com");
         webview.addPermittedHostname("m.facebook.com");
+        webview.addPermittedHostname("h.facebook.com");
 
         webview.setListener(this, new AdvancedWebView.Listener() {
 
@@ -57,6 +60,15 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onExternalPageRequest(String url) {
+                //AlertDialog ad = new AlertDialog.Builder(MainActivity.this).create();
+                //ad.setMessage(url);
+                //ad.setButton("OK", new DialogInterface.OnClickListener() {
+                //    @Override
+                //    public void onClick(DialogInterface dialog, int which) {
+                //        dialog.dismiss();
+                //    }
+                //});
+                //ad.show();
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
