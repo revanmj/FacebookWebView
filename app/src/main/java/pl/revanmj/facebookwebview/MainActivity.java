@@ -1,7 +1,5 @@
 package pl.revanmj.facebookwebview;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;

@@ -1,11 +1,11 @@
 .gradle
-/local.properties
 .idea
-*.iml
-Thumbs.db
 .DS_Store
-/build
+*.iml
 *.dex
 *.class
+/local.properties
+/build
+Thumbs.db
 bin/
 gen/
