@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "pl.revanmj.facebookwebview"
         minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 3
-        versionName "1.0.2"
+        targetSdkVersion 24
+        versionCode 4
+        versionName "1.0.3"
     }
     buildTypes {
         release {
@@ -20,6 +20,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.github.delight-im:Android-AdvancedWebView:v2.1.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 }
