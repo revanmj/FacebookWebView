@@ -2,5 +2,9 @@
 <resources>
 
     <string name="app_name">Facebook Lite</string>
+    <string name="location_permission_denied">Location permission denied, disabling geolocation support...</string>
+    <string name="download_failed">File download failed!</string>
+    <string name="download_finished">File download finished.</string>
+    <string name="error_only_url">Only URLs are supported!</string>
 
 </resources>
