@@ -7,8 +7,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +18,8 @@ import android.widget.Toast;
 
 import im.delight.android.webview.AdvancedWebView;
 
-public class MainActivity extends ActionBarActivity {
-
-    AdvancedWebView webview;
+public class MainActivity extends AppCompatActivity {
+    AdvancedWebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +32,14 @@ public class MainActivity extends ActionBarActivity {
             CookieSyncManager.createInstance(getApplicationContext());
         CookieManager.getInstance().setAcceptCookie(true);
 
-        webview = (AdvancedWebView) findViewById(R.id.webView);
-        webview.getSettings().setAppCacheEnabled(true);
-        webview.addPermittedHostname("www.facebook.com");
-        webview.addPermittedHostname("touch.facebook.com");
-        webview.addPermittedHostname("m.facebook.com");
-        webview.addPermittedHostname("h.facebook.com");
-        webview.addPermittedHostname("facebook.com");
-        webview.setListener(this, new AdvancedWebView.Listener() {
+        mWebView = findViewById(R.id.webView);
+        mWebView.getSettings().setAppCacheEnabled(true);
+        mWebView.addPermittedHostname("www.facebook.com");
+        mWebView.addPermittedHostname("touch.facebook.com");
+        mWebView.addPermittedHostname("m.facebook.com");
+        mWebView.addPermittedHostname("h.facebook.com");
+        mWebView.addPermittedHostname("facebook.com");
+        mWebView.setListener(this, new AdvancedWebView.Listener() {
 
             @Override
             public void onPageFinished(String url) {
@@ -89,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
 
         });
 
-        webview.loadUrl("http://www.facebook.com/");
+        mWebView.loadUrl("http://www.facebook.com/");
         checkForPermission();
     }
 
@@ -98,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, "android.permission.ACCESS_FINE_LOCATION")) {
             Toast.makeText(this, "Location permission denied, disabling geolocation support...", Toast.LENGTH_LONG).show();
-            webview.setGeolocationEnabled(false);
+            mWebView.setGeolocationEnabled(false);
             return;
         }
         else if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -106,7 +105,7 @@ public class MainActivity extends ActionBarActivity {
             return;
         }
 
-        webview.setGeolocationEnabled(true);
+        mWebView.setGeolocationEnabled(true);
     }
 
     @Override
@@ -114,10 +113,10 @@ public class MainActivity extends ActionBarActivity {
         switch (requestCode) {
             case 1:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    webview.setGeolocationEnabled(true);
+                    mWebView.setGeolocationEnabled(true);
                 } else {
                     Toast.makeText(this, "Location permission denied, disabling geolocation support...", Toast.LENGTH_SHORT).show();
-                    webview.setGeolocationEnabled(false);
+                    mWebView.setGeolocationEnabled(false);
                 }
                 break;
             default:
@@ -162,12 +161,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        webview.onActivityResult(requestCode, resultCode, intent);
+        mWebView.onActivityResult(requestCode, resultCode, intent);
     }
 
     @Override
     public void onBackPressed() {
-        if (webview.onBackPressed()) {
+        if (mWebView.onBackPressed()) {
             // your normal onBackPressed() code here
             super.onBackPressed();
         }
