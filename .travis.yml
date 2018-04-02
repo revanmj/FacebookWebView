@@ -1,0 +1,18 @@
+language: android
+jdk: oraclejdk8
+sudo: true
+
+os:
+  - linux
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools
+    - build-tools-27.0.3
+    - android-27
+
+script:
+  - cd ./library
+  - ./gradlew clean check --profile
