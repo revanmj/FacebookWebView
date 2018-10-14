@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "pl.revanmj.facebookwebview"
         minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 5
-        versionName "1.1"
+        targetSdkVersion 28
+        versionCode 6
+        versionName "1.2"
     }
     buildTypes {
         release {
@@ -20,6 +20,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:27.1.0'
-    compile 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
