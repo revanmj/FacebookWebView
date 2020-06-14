@@ -17,11 +17,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
+import im.delight.android.webview.AdvancedWebView
+
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.util.ArrayList
 
-import im.delight.android.webview.AdvancedWebView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -41,8 +43,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val mWebView: AdvancedWebView = findViewById(R.id.webView)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
             CookieSyncManager.createInstance(applicationContext)
         CookieManager.getInstance().setAcceptCookie(true)
 
-        mWebView.settings.setAppCacheEnabled(true)
-        mWebView.addPermittedHostnames(PERMITTED_HOSTNAMES)
-        mWebView.setListener(this, object : AdvancedWebView.Listener {
+        webView.settings.setAppCacheEnabled(true)
+        webView.addPermittedHostnames(PERMITTED_HOSTNAMES)
+        webView.setListener(this, object : AdvancedWebView.Listener {
             override fun onPageFinished(url: String) {
                 if (Build.VERSION.SDK_INT > 20)
                     CookieManager.getInstance().flush()
@@ -101,18 +101,17 @@ class MainActivity : AppCompatActivity() {
                 val shareText = intent.getStringExtra(Intent.EXTRA_TEXT)
                 if (Patterns.WEB_URL.matcher(shareText).matches()) {
                     try {
-                        mWebView.loadUrl(FB_SHARE_URL + URLEncoder.encode(shareText, "UTF-8"))
+                        webView.loadUrl(FB_SHARE_URL + URLEncoder.encode(shareText, "UTF-8"))
                         super.onNewIntent(intent)
                         return
                     } catch (e: UnsupportedEncodingException) { }
-
                 } else {
                     Toast.makeText(this, R.string.error_only_url, Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }
         }
-        mWebView.loadUrl(FB_URL)
+        webView.loadUrl(FB_URL)
     }
 
     private fun checkForPermission() {
@@ -120,23 +119,23 @@ class MainActivity : AppCompatActivity() {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()
-            mWebView.setGeolocationEnabled(false)
+            webView.setGeolocationEnabled(false)
             return
         } else if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_REQUEST_CODE)
             return
         }
-        mWebView.setGeolocationEnabled(true)
+        webView.setGeolocationEnabled(true)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mWebView.setGeolocationEnabled(true)
+                webView.setGeolocationEnabled(true)
             } else {
                 Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_SHORT).show()
-                mWebView.setGeolocationEnabled(false)
+                webView.setGeolocationEnabled(false)
             }
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
@@ -157,11 +156,11 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         // Making back key going to the previous site
-        mWebView.onActivityResult(requestCode, resultCode, intent)
+        webView.onActivityResult(requestCode, resultCode, intent)
     }
 
     override fun onBackPressed() {
-        if (mWebView.onBackPressed()) {
+        if (webView.onBackPressed()) {
             super.onBackPressed()
         }
     }
